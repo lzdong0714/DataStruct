@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding" addBOMForNewFiles="with NO BOM">
+    <file url="file://$PROJECT_DIR$/algorithm/AlgoFrame.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/algorithm/AlgoVisualizer.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/dataStructure/AVLTree.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/mysqlConnectTest/DruidDemo.java" charset="GBK" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

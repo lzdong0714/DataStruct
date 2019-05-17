@@ -1,6 +1,5 @@
 package visualizer;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -41,7 +40,7 @@ public int getCanvasHeight() {
 	return canvasHeight;
 }
 
-//TODO:ÉèÖÃ×Ô¼ºµÄÊý¾Ý
+//TODO:ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 private Object data;
 public void render(Object data) {
 	this.data=data;
@@ -60,13 +59,13 @@ private class  AlgoCanvas extends JPanel{
 		
 		Graphics2D graphics2d=(Graphics2D)g;
 		
-		//¿¹¾â³Ý
+		//ï¿½ï¿½ï¿½ï¿½ï¿½
 		RenderingHints hints=new RenderingHints(
 				RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
 		graphics2d.addRenderingHints(hints);
 		AlogVisHelper.setStrokeWidth(graphics2d, 5);
 			
-		//¾ßÌå»æÖÆ
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 
 	}

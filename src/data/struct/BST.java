@@ -1,31 +1,28 @@
-package dataStructure.BRTress;
+package data.struct;
+
+import data.struct.util.FileOperation;
 
 import java.util.ArrayList;
 
-public class RBTree<K extends Comparable<K>, V> {
-
-    private static final boolean RED = true;
-    private static final boolean BLACK = false;
+public class BST<K extends Comparable<K>, V> {
 
     private class Node{
         public K key;
         public V value;
         public Node left, right;
-        public boolean color;
 
         public Node(K key, V value){
             this.key = key;
             this.value = value;
             left = null;
             right = null;
-            color = RED;
         }
     }
 
     private Node root;
     private int size;
 
-    public RBTree(){
+    public BST(){
         root = null;
         size = 0;
     }
@@ -38,72 +35,18 @@ public class RBTree<K extends Comparable<K>, V> {
         return size == 0;
     }
 
-    // 鍒ゆ柇鑺傜偣node鐨勯鑹�
-    private boolean isRed(Node node){
-        if(node == null)
-            return BLACK;
-        return node.color;
-    }
-
-    //   node                    x
-    //  /   \     宸︽棆杞�                              /  \
-    // T1   x   --------->   node   T3
-    //     / \              /   \
-    //    T2 T3            T1   T2
-    private Node leftRotate(Node node){
-
-        Node x = node.right;
-
-        // 宸︽棆杞�
-        node.right = x.left;
-        x.left = node;
-
-        x.color = node.color;
-        node.color = RED;//缁存姢榛戦珮
-
-        return x;
-    }
-
-    //     node                  x
-    //    /   \     鍙虫棆杞�                       /  \
-    //   x    T2   ------->   y   node
-    //  / \                       /  \
-    // y  T1                     T1  T2
-    private Node rightRotate(Node node){
-
-        Node x = node.left;
-
-        // 鍙虫棆杞�
-        node.left = x.right;
-        x.right = node;
-
-        x.color = node.color;
-        node.color = RED;
-
-        return x;
-    }
-
-    // 棰滆壊缈昏浆
-    private void flipColors(Node node){
-
-        node.color = RED;
-        node.left.color = BLACK;
-        node.right.color = BLACK;
-    }
-
-    // 鍚戠孩榛戞爲涓坊鍔犳柊鐨勫厓绱�(key, value)
+    // 向二分搜索树中添加新的元素(key, value)
     public void add(K key, V value){
         root = add(root, key, value);
-        root.color = BLACK; // 鏈�缁堟牴鑺傜偣涓洪粦鑹茶妭鐐�
     }
 
-    // 鍚戜互node涓烘牴鐨勭孩榛戞爲涓彃鍏ュ厓绱�(key, value)锛岄�掑綊绠楁硶
-    // 杩斿洖鎻掑叆鏂拌妭鐐瑰悗绾㈤粦鏍戠殑鏍�
+    // 向以node为根的二分搜索树中插入元素(key, value)，递归算法
+    // 返回插入新节点后二分搜索树的根
     private Node add(Node node, K key, V value){
 
         if(node == null){
             size ++;
-            return new Node(key, value); // 榛樿鎻掑叆绾㈣壊鑺傜偣锛屼篃鏄负浜嗙淮鎶ら粦楂�
+            return new Node(key, value);
         }
 
         if(key.compareTo(node.key) < 0)
@@ -112,20 +55,11 @@ public class RBTree<K extends Comparable<K>, V> {
             node.right = add(node.right, key, value);
         else // key.compareTo(node.key) == 0
             node.value = value;
-        // case4鎬庝箞鎼烇紵
-        if (isRed(node.right) && !isRed(node.left))//杩欎笁涓猧f鐨勯『搴忎笉鑳芥崲銆�
-            node = leftRotate(node);
-
-        if (isRed(node.left) && isRed(node.left.left))
-            node = rightRotate(node);
-
-        if (isRed(node.left) && isRed(node.right))
-            flipColors(node);
 
         return node;
     }
 
-    // 杩斿洖浠ode涓烘牴鑺傜偣鐨勪簩鍒嗘悳绱㈡爲涓紝key鎵�鍦ㄧ殑鑺傜偣
+    // 返回以node为根节点的二分搜索树中，key所在的节点
     private Node getNode(Node node, K key){
 
         if(node == null)
@@ -157,15 +91,15 @@ public class RBTree<K extends Comparable<K>, V> {
         node.value = newValue;
     }
 
-    // 杩斿洖浠ode涓烘牴鐨勪簩鍒嗘悳绱㈡爲鐨勬渶灏忓�兼墍鍦ㄧ殑鑺傜偣
+    // 返回以node为根的二分搜索树的最小值所在的节点
     private Node minimum(Node node){
         if(node.left == null)
             return node;
         return minimum(node.left);
     }
 
-    // 鍒犻櫎鎺変互node涓烘牴鐨勪簩鍒嗘悳绱㈡爲涓殑鏈�灏忚妭鐐�
-    // 杩斿洖鍒犻櫎鑺傜偣鍚庢柊鐨勪簩鍒嗘悳绱㈡爲鐨勬牴
+    // 删除掉以node为根的二分搜索树中的最小节点
+    // 返回删除节点后新的二分搜索树的根
     private Node removeMin(Node node){
 
         if(node.left == null){
@@ -179,7 +113,7 @@ public class RBTree<K extends Comparable<K>, V> {
         return node;
     }
 
-    // 浠庝簩鍒嗘悳绱㈡爲涓垹闄ら敭涓簁ey鐨勮妭鐐�
+    // 从二分搜索树中删除键为key的节点
     public V remove(K key){
 
         Node node = getNode(root, key);
@@ -205,7 +139,7 @@ public class RBTree<K extends Comparable<K>, V> {
         }
         else{   // key.compareTo(node.key) == 0
 
-            // 寰呭垹闄よ妭鐐瑰乏瀛愭爲涓虹┖鐨勬儏鍐�
+            // 待删除节点左子树为空的情况
             if(node.left == null){
                 Node rightNode = node.right;
                 node.right = null;
@@ -213,7 +147,7 @@ public class RBTree<K extends Comparable<K>, V> {
                 return rightNode;
             }
 
-            // 寰呭垹闄よ妭鐐瑰彸瀛愭爲涓虹┖鐨勬儏鍐�
+            // 待删除节点右子树为空的情况
             if(node.right == null){
                 Node leftNode = node.left;
                 node.left = null;
@@ -221,10 +155,10 @@ public class RBTree<K extends Comparable<K>, V> {
                 return leftNode;
             }
 
-            // 寰呭垹闄よ妭鐐瑰乏鍙冲瓙鏍戝潎涓嶄负绌虹殑鎯呭喌
+            // 待删除节点左右子树均不为空的情况
 
-            // 鎵惧埌姣斿緟鍒犻櫎鑺傜偣澶х殑鏈�灏忚妭鐐�, 鍗冲緟鍒犻櫎鑺傜偣鍙冲瓙鏍戠殑鏈�灏忚妭鐐�
-            // 鐢ㄨ繖涓妭鐐归《鏇垮緟鍒犻櫎鑺傜偣鐨勪綅缃�
+            // 找到比待删除节点大的最小节点, 即待删除节点右子树的最小节点
+            // 用这个节点顶替待删除节点的位置
             Node successor = minimum(node.right);
             successor.right = removeMin(node.right);
             successor.left = node.left;
@@ -239,11 +173,11 @@ public class RBTree<K extends Comparable<K>, V> {
 
         System.out.println("Pride and Prejudice");
 
-        ArrayList<String> words = new ArrayList<>();
-        if(FileOperation.readFile("pride-and-prejudice.txt", words)) {
+        ArrayList<String> words = new ArrayList();
+        if(FileOperation.readFile("E:\\DataStruct\\src\\resource\\pride-and-prejudice.txt", words)) {
             System.out.println("Total words: " + words.size());
 
-            RBTree<String, Integer> map = new RBTree<>();
+            BST<String, Integer> map = new BST();
             for (String word : words) {
                 if (map.contains(word))
                     map.set(word, map.get(word) + 1);
@@ -254,6 +188,8 @@ public class RBTree<K extends Comparable<K>, V> {
             System.out.println("Total different words: " + map.getSize());
             System.out.println("Frequency of PRIDE: " + map.get("pride"));
             System.out.println("Frequency of PREJUDICE: " + map.get("prejudice"));
+        }else {
+
         }
 
         System.out.println();
