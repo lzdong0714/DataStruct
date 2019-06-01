@@ -28,8 +28,11 @@ public class SynchronizeThis {
                 thisLock.m3();
             }
         }.start();
-    }
 
+    System.out.println("main is finished");
+
+    //所有线程执行完毕才会输出Process finished with exit code 0
+    }
 
 }
 

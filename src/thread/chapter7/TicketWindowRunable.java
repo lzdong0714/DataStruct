@@ -6,7 +6,7 @@ public class TicketWindowRunable implements Runnable {
 
     private int index = 1;
 
-//    //这里线程安全的
+    //这里线程不安全的，同一个值会多次读写，不安全
 //    public void run() {
 //        while (index <= MAX){
 //            System.out.println(Thread.currentThread().getName() +
@@ -19,7 +19,7 @@ public class TicketWindowRunable implements Runnable {
 //        }
 //    }
 
-    //这样是线程不安全的
+    //这样是线程不安全的，因为多个线程读写index，
 //    public void run(){
 //        while (true){
 //            if(index > MAX){
