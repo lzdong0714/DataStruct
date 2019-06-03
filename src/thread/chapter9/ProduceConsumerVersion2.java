@@ -1,7 +1,9 @@
 package thread.chapter9;
 
-//单个生产与消费下的版本
-public class ProduceConsumerVersion {
+import java.util.stream.Stream;
+
+//多消费者和生产者条件下的锁问题
+public class ProduceConsumerVersion2 {
 
     private int i = 1;
 
@@ -22,7 +24,7 @@ public class ProduceConsumerVersion {
             }else {
                 //唤醒线程
                 LOCK.notify();
-                System.out.println("P -> "+(i++));
+                System.out.println(Thread.currentThread().getName()+" P -> "+(i++));
                 isProduce = true;
 
             }
@@ -39,31 +41,31 @@ public class ProduceConsumerVersion {
                 }
             }else {
                 LOCK.notify();
-                System.out.println("C -> " + i);
+                System.out.println(Thread.currentThread().getName()+" C -> " + i);
                 isProduce = false;
             }
         }
     }
 
+
     public static void main(String[] args) {
-        ProduceConsumerVersion pc = new ProduceConsumerVersion();
+        ProduceConsumerVersion2 pc2 = new ProduceConsumerVersion2();
 
-        new Thread("p"){
-            @Override
-            public void run() {
+        Stream.of("T1","T2").forEach(item->{
+            new Thread(()->{
                 while (true){
-                    pc.produce();
+                    pc2.produce();
                 }
-            }
-        }.start();
 
-        new Thread("c"){
-            @Override
-            public void run() {
+            }).start();
+
+            new Thread(()->{
                 while (true){
-                    pc.consume();
+                    pc2.consume();
                 }
-            }
-        }.start();
+            }).start();
+        });
+        // p1 p2 c1 c2 用的是同一个锁
+        //存在 p1 p2 c1 c2 都是wati状态，不同同于之前的死锁，
     }
 }
