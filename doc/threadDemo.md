@@ -16,23 +16,22 @@
 	3 如果构造线程没有输入 ThreadGroup,那么就会是设定为该线程父线程的 ThreadGroup,
 	4 public Thread(ThreadGroup,Runnable,String,long stackSize)
 		stackSize: 线程栈的大小,与平台有关。
-
+	
 	5 JVM构成：
 	  5-1： 方法区，属于线程栈的一部分。
 
 
 	  5-3： 虚拟机栈（）：线程私有的
-
+	
 	  5-4: 本地方法区 (jre NIO)
-
+	
 	  5-5 : 程序计数器
-
+	
 	   5-2： 堆内存 (heap memory)
 
 
 	  C++ 层： 执行引擎 本地库接口 本地方法
 }
-
 
 {
 	cmd jps
@@ -40,8 +39,25 @@
 {
 	   /**
      * 用win+R 输入jconsole 可以连接java面板查询线程
-     * 用win+R 输入cmd ，输入jps可以查看启动进程
-     * 输入jstack 查看线程堆
-     *
-     */
+          * 用win+R 输入cmd ，输入jps可以查看启动进程
+          * 输入jstack 查看线程堆
+               *
+          ​     */
 }
+
+### Thread 中wait 和sleep的区别
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

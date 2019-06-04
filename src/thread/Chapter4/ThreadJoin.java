@@ -5,8 +5,8 @@ import java.util.stream.IntStream;
 public class ThreadJoin {
     public static void main(String[] args) {
 //        ThreadJoin.example_1();
-//        ThreadJoin.example_2();
-        ThreadJoin.example_3();
+        ThreadJoin.example_2();
+//        ThreadJoin.example_3();
     }
 
     /**
@@ -51,7 +51,9 @@ public class ThreadJoin {
         t2.start();
         try {
             //必须在start()之后；
-            //会先执行t1,在执行main
+            //会先执行t1,在执行main，t1 t2 join的都是main
+            //如若是 t1.start() t1.join() t2.start() t2.join()
+            //那么就是t1执行完成之后再有t2的执行
             t1.join();
             t2.join();
         }catch (InterruptedException e){
