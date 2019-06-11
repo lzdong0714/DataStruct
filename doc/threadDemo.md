@@ -47,9 +47,15 @@
 
 ### Thread 中wait 和sleep的区别
 
+1 sleep is the method of Thread ,but the wait is the method of Object
 
+2 sleep will not release the object monitor (Lock),but the wait can release the LOCK
 
+这个是一个重要的区别，参看chapter9 的DifferenceOfWaiAndSleep
 
+3 use slepp not depend on the monitorm but wait need object
+
+4 use sleep is not need wake up ,but wait need 
 
 
 

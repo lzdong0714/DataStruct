@@ -12,6 +12,8 @@ public class BooleanLock implements Lock {
 
     private Collection<Thread> blockedThreadCollection = new ArrayList<>();
 
+    private Thread currentThread;
+
     public BooleanLock(){
         this.initValue = false;
     }
@@ -25,6 +27,7 @@ public class BooleanLock implements Lock {
 
         blockedThreadCollection.remove(Thread.currentThread());
         this.initValue = true;
+        currentThread = Thread.currentThread();
     }
 
     @Override
@@ -34,10 +37,14 @@ public class BooleanLock implements Lock {
 
     @Override
     public synchronized void unlock() {
-        this.initValue = false;
-        System.out.println(Thread.currentThread().getName()+
-                " release the lock monitor");
-        this.notifyAll();
+        if(currentThread == Thread.currentThread()){
+            this.initValue = false;
+            System.out.println(Thread.currentThread().getName()+
+                    " release the lock monitor");
+            this.notifyAll();
+        }else{
+            System.out.println("wrong thread release monitor");
+        }
     }
 
     @Override
