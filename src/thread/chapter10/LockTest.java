@@ -12,13 +12,16 @@ public class LockTest {
         .forEach(name->{
             new Thread(()->{
                 try {
-                    booleanLock.lock();
+                    booleanLock.lock(10);
                     Optional.of(Thread.currentThread().getName()+
                             " has the lock")
                     .ifPresent(System.out::println);
                     work();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
+                }catch (Lock.TimeOutException e){
+                    Optional.of(Thread.currentThread().getName()+" time out")
+                            .ifPresent(System.out::println);
                 }finally {
                     booleanLock.unlock();
                 }

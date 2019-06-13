@@ -31,8 +31,23 @@ public class BooleanLock implements Lock {
     }
 
     @Override
-    public void lock(long mills) throws InterruptedException, TimeOutException {
+    public synchronized void lock(long mills) throws InterruptedException, TimeOutException {
+        if(mills<=0){
+            lock();
+        }
 
+        long hasremain = mills;
+        long endTime = System.currentTimeMillis() + mills;
+        while (initValue){
+            if(hasremain <= 0)
+                throw new TimeOutException("Time is out");
+            blockedThreadCollection.add(Thread.currentThread());
+            this.wait(mills);
+            hasremain =  endTime-System.currentTimeMillis();
+        }
+
+        this.initValue = true;
+        this.currentThread = Thread.currentThread();
     }
 
     @Override
