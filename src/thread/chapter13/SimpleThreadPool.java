@@ -31,6 +31,7 @@ public class SimpleThreadPool {
         init();
     }
 
+    //创建了一定数量的线程数，但是没有限定任务的个数
     private void init(){
         for (int i = 0;i < size; i++){
             createWorkTask();
@@ -40,18 +41,20 @@ public class SimpleThreadPool {
     public  void submit(Runnable runnable){
         synchronized (TASK_QUEUE){
             TASK_QUEUE.addFirst(runnable);
+
             TASK_QUEUE.notifyAll();
         }
     }
 
     private void createWorkTask(){
         WorkerTask task = new WorkerTask(GROUP, THREAD_PREFIX + (seq++));
+        //添加的线程，并运行
         task.start();
         THREAD_QUEUE.add(task);
     }
 
     static enum TaskState{
-        FREE, RUNNIG, BLOCKED, DEAD
+        FREE, RUNNING, BLOCKED, DEAD
     }
 
     private static class WorkerTask extends Thread{
@@ -84,7 +87,7 @@ public class SimpleThreadPool {
 
                 }
                 if(runnable!=null){
-                    taskState = TaskState.RUNNIG;
+                    taskState = TaskState.RUNNING;
                     runnable.run();
                     taskState = TaskState.FREE;
                 }
@@ -97,8 +100,10 @@ public class SimpleThreadPool {
     }
 
     public static void main(String[] args) {
+        //创建默认的线程
         SimpleThreadPool threadPool = new SimpleThreadPool();
 
+        //加入大于线程个数的任务数
         IntStream.rangeClosed(0,40)
                 .forEach(item->{
                     threadPool.submit(()->{

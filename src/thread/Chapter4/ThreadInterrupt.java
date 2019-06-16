@@ -73,6 +73,7 @@ public class ThreadInterrupt {
 //            说明这 3 个方法调用时均可以被打断，但是join操作的是
 //            main线程，所以要对main线程打断，才能有InterruptException
             t.join();
+
         }catch (InterruptedException e){
             e.printStackTrace();
         }
