@@ -9,7 +9,11 @@ public class SimpleThreadPool {
 
     private final int size;
 
+    private final int queueSize;
+
     private final static int DEFAULT_SIZE = 10;
+
+    private final static int  DEFAULT_TASK_SIZE = 2000;
 
     private static volatile int seq = 0;
 
@@ -21,12 +25,27 @@ public class SimpleThreadPool {
 
     private final static List<WorkerTask> THREAD_QUEUE = new ArrayList<>();
 
+    private final DiscardPolicy discardPolicy;
 
-    public SimpleThreadPool(){
-        this(DEFAULT_SIZE);
+    private volatile boolean destroy = false;
+
+    public final static DiscardPolicy DEFAULT_DISCARD_POLICY = ()->{throw new DiscardException("DisCard this task");};
+
+
+    private static class DiscardException extends RuntimeException {
+        public DiscardException(String msg){
+            super(msg);
+        }
+
     }
 
-    public SimpleThreadPool(int size){
+    public SimpleThreadPool(){
+        this(DEFAULT_SIZE,DEFAULT_TASK_SIZE,DEFAULT_DISCARD_POLICY);
+    }
+
+    public SimpleThreadPool(int size,int queueSize,DiscardPolicy discardPolicy){
+        this. discardPolicy= discardPolicy;
+        this.queueSize = queueSize;
         this.size = size;
         init();
     }
@@ -39,7 +58,13 @@ public class SimpleThreadPool {
     }
 
     public  void submit(Runnable runnable){
+        if(destroy){
+            throw new IllegalArgumentException("the thread pool had been destroyed ,submit is no allowed");
+        }
         synchronized (TASK_QUEUE){
+            if(queueSize<TASK_QUEUE.size()){
+                discardPolicy.discard();
+            }
             TASK_QUEUE.addFirst(runnable);
 
             TASK_QUEUE.notifyAll();
@@ -53,8 +78,37 @@ public class SimpleThreadPool {
         THREAD_QUEUE.add(task);
     }
 
-    static enum TaskState{
+    public void shutdown() throws InterruptedException{
+        while (!TASK_QUEUE.isEmpty()){
+            Thread.sleep(50);
+        }
+
+        int initVal = THREAD_QUEUE.size();
+        while (initVal > 0){
+            for(WorkerTask task : THREAD_QUEUE){
+                if(task.getTaskState() == TaskState.BLOCKED){
+                    task.interrupt();
+                    task.close();
+                    initVal--;
+                }else {
+                    Thread.sleep(10);
+                }
+            }
+        }
+        destroy = true;
+        System.out.println("The thread pool disposed");
+    }
+
+    public boolean isDestroy(){
+        return this.destroy;
+    }
+
+    private enum TaskState{
         FREE, RUNNING, BLOCKED, DEAD
+    }
+
+    public interface DiscardPolicy{
+         void discard() throws DiscardException;
     }
 
     private static class WorkerTask extends Thread{
@@ -99,12 +153,13 @@ public class SimpleThreadPool {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         //创建默认的线程
         SimpleThreadPool threadPool = new SimpleThreadPool();
+//        SimpleThreadPool threadPool = new SimpleThreadPool(6,10,SimpleThreadPool.DEFAULT_DISCARD_POLICY);
 
         //加入大于线程个数的任务数
-        IntStream.rangeClosed(0,40)
+        IntStream.rangeClosed(0,400)
                 .forEach(item->{
                     threadPool.submit(()->{
                       System.out.println("the current task "+item+" is working:"+
@@ -118,6 +173,10 @@ public class SimpleThreadPool {
 
                     });
                 });
+
+        Thread.sleep(10000);
+        threadPool.shutdown();
+
     }
 
 }
