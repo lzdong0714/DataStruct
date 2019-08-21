@@ -9,8 +9,6 @@ import java.util.stream.IntStream;
 //建立线程池后，要关闭线程池，所以才继承Thread
 public class SimpleThreadPool extends Thread{
 
-
-
     private int size;
 
     private final int queueSize;
@@ -73,7 +71,7 @@ public class SimpleThreadPool extends Thread{
             throw new IllegalArgumentException("the thread pool had been destroyed ,submit is no allowed");
         }
         synchronized (TASK_QUEUE){
-            if(queueSize<TASK_QUEUE.size()){
+            if(queueSize < TASK_QUEUE.size()){
                 discardPolicy.discard();
             }
             TASK_QUEUE.addFirst(runnable);
@@ -199,7 +197,6 @@ public class SimpleThreadPool extends Thread{
                     }
 
                     runnable = TASK_QUEUE.removeFirst();
-
                 }
                 if(runnable!=null){
                     taskState = TaskState.RUNNING;
