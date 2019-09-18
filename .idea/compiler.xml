@@ -20,7 +20,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="DataStruct" target="11" />
+      <module name="DataStruct" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>
