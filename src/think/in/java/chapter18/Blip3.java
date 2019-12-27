@@ -28,6 +28,7 @@ public class Blip3 implements Externalizable {
         System.out.println("Blip3 readExternal");
         s = (String) in.readObject();
         i = (int)in.readObject();
+
     }
 
 
