@@ -107,7 +107,6 @@ public class DynamicFields {
             df.setField("d", "A value of d");
             df.setField("number2", 47);
             df.setField("number2", 48);
-            System.out.println(df);
             df.setField("d", "a new value for d");
             df.setField("number2", 99);
             System.out.println("df: " + df);
