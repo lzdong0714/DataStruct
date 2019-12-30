@@ -6,7 +6,7 @@ import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 class AlwaysException extends Exception{}
 
-public class AlwaysFinially {
+public class FinallyAlways {
 
     public static void main(String[] args) {
         System.out.println("step into main");
