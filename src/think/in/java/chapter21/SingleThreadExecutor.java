@@ -10,7 +10,7 @@ public class SingleThreadExecutor {
     public static void main(String[] args) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
 
-        IntStream.rangeClosed(1, 5).forEach(i ->{
+        IntStream.rangeClosed(1, 5).forEach(i -> {
             executor.execute(new LiftOff());
         });
         executor.shutdown();
