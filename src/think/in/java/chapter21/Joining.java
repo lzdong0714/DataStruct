@@ -46,7 +46,7 @@ public class Joining {
         Sleeper sleeper = new Sleeper("Sleeper", 1500);
         Sleeper grunmpy = new Sleeper("Grumnpy", 1500);
         Join join = new Join("Dopey", sleeper),
-             doc = new Join("fgrunmpy", grunmpy);
+             doc = new Join("grunmpy", grunmpy);
 
         grunmpy.interrupt();
 

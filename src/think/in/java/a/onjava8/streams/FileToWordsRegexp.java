@@ -22,6 +22,9 @@ public class FileToWordsRegexp {
                 .skip(1)
                 .collect(Collectors.joining(" "));
     }
+    public FileToWordsRegexp(){
+        all = "NONE";
+    }
 
     // 全部读入到String all中后在处理
     public Stream<String> stream(){
@@ -33,9 +36,24 @@ public class FileToWordsRegexp {
     public static Stream<String> stream(String filePath) throws IOException {
         return Files.lines(Paths.get(filePath))
                 .skip(1)
-                .flatMap(line -> Pattern.compile("\\w+").splitAsStream(line));
+                .flatMap(line -> Pattern.compile("\\W+").splitAsStream(line));
+
 
     }
+
+    public static void main(String[] args) {
+       ;
+        String path =  System.getProperty("user.dir") + "/src/resource/pride-and-prejudice.txt";
+
+        try {
+            Stream<String> stream = FileToWordsRegexp.stream(path);
+            stream.limit(100).forEach(System.out::println);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 
 }
