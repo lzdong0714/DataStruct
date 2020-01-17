@@ -22,7 +22,7 @@ public class StreamOptional {
         boolean b = optional.isPresent();
         if(b){
             //  to do sth
-        }else {
+        }else{
             // NPE
         }
         List<String> ret = new LinkedList<>();
