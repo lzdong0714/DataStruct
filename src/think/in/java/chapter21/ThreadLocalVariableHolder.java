@@ -33,20 +33,15 @@ class Accessor implements Runnable{
 
 
 public class ThreadLocalVariableHolder {
-    private static ThreadLocal<Integer> value = new ThreadLocal<Integer>();
-    // TODO ThreadLocal的初始化
-//    {
-//      private Random random = new Random(47);
-//      protected synchronized Integer initalValue(){
-//          return random.nextInt(10000);
-//      }
-//    };
+    private static ThreadLocal<Integer> value = new ThreadLocal<Integer>() {
+      private Random random = new Random(47);
+      // ThreadLocal的值初始化，
+      protected synchronized Integer initialValue(){
+          return random.nextInt(10000);
+      }
+    };
 
     public static void increment(){
-        boolean b = Optional.ofNullable(value.get()).isPresent();
-        if(b){
-            value.set(0);
-        }
         value.set(value.get() + 1);
     }
 
@@ -67,6 +62,6 @@ public class ThreadLocalVariableHolder {
 
 
         TimeUnit.SECONDS.sleep(3);
-        exec.shutdown();
+        exec.shutdownNow();
     }
 }
