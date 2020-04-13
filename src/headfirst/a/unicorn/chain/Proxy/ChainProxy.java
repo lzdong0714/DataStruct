@@ -7,10 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * @Author: Liu Zhendong
@@ -46,8 +43,26 @@ public class ChainProxy extends GenericAbstractAction {
             }
     }
 
+    private void addAction(Action addAction, Class<Action> beforeAction){
+        if(actions.isEmpty()){
+            actions.add(addAction);
+            return;
+        }
+
+        for(int index=0; index<actions.size(); index++){
+            Action action = actions.get(index);
+//             TODO
+//    //  写一个配配置文件，可以有序的添加filter
+//            boolean is =
+//            if()
+        }
+
+
+
+    }
+
+    LinkedList<Action> actions = new LinkedList<>();
     private List<Action> getActions() {
-        ArrayList<Action> actions = new ArrayList<>();
         actions.add(new ContextPersistenceAction());
         actions.add(new ExceptionAction());
         actions.add(new VirtualHandleAction());

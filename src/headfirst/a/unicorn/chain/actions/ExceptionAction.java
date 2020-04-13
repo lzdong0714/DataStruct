@@ -2,6 +2,7 @@ package headfirst.a.unicorn.chain.actions;
 
 import headfirst.a.unicorn.chain.Proxy.ActionChain;
 import headfirst.a.unicorn.chain.Proxy.GenericAbstractAction;
+import headfirst.a.unicorn.chain.exception.AuthenticaionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,9 +21,12 @@ public class ExceptionAction extends GenericAbstractAction {
             logger.info("进入异常处理器");
             actionChain.doAction(input, output);
             logger.info("无异常");
+
         }catch (IOException ex){
             throw ex;
-        }catch (Exception ex){
+        } catch (Exception ex){
+
+                logger.info("catch a authentication exception");
             logger.info("捕捉到了异常，继续处理");
         }
     }
