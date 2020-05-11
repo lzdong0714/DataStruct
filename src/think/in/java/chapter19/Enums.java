@@ -30,7 +30,15 @@ public class Enums {
         int ord = 1;
         Colour value = Colour.values()[ord];
         switch (value){
-            case Black: log.info("{}", Colour.Black);
+            case Black: {
+                log.info("{}", Colour.Black);
+                break;
+            }
+
+            case Blue:{
+                log.info("{}", Colour.Blue);
+                break;
+            }
             default: log.info("wrong guess");
         }
     }
