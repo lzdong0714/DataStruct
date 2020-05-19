@@ -28,11 +28,17 @@ public class TimePrint {
 //
 
         timePrint.PrintTodayBegin();
+        timePrint.timePrint();
     }
 
     private long timePrint(){
         long second = LocalDateTime.now().toEpochSecond(ZoneOffset.of("+8"));
         System.out.println(second);
+        System.out.println("=============");
+        System.out.println(LocalDateTime.now());
+        System.out.println("=============");
+        System.out.println(LocalDateTime.now((ZoneOffset.of("+10"))));
+        System.out.println("=============");
         return second;
     }
 
