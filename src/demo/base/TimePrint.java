@@ -26,7 +26,6 @@ public class TimePrint {
 //                    }
 //                });
 //
-
         timePrint.PrintTodayBegin();
         timePrint.timePrint();
     }
