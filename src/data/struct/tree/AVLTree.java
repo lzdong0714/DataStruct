@@ -1,4 +1,4 @@
-package data.struct;
+package data.struct.tree;
 
 import data.struct.util.FileOperation;
 
