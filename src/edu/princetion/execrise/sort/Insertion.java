@@ -10,7 +10,7 @@ public class Insertion extends Example {
                 if( !less(a[j], a[j-1]) )
                     exch(a, j, j-1);
             }
-        }
+       }
     }
 
 
@@ -21,4 +21,6 @@ public class Insertion extends Example {
         assert Insertion.isSorted(a);
         Insertion.show(a);
     }
+
+
 }
