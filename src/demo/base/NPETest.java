@@ -1,7 +1,9 @@
 package demo.base;
 
 import lombok.Data;
+import org.apache.commons.lang.StringUtils;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +16,8 @@ public class NPETest {
 
     public static void main(String[] args) {
         NPETest npeTest = new NPETest();
-        npeTest.test_1();
+//        npeTest.test_1();
+        npeTest.test_2();
     }
 
     public void test_1(){
@@ -30,6 +33,15 @@ public class NPETest {
 //        monitro.getName();             // NullPointerException
 //        int age = monitro.getAge(); // NullPointerException
 
+    }
+
+    public void test_2(){
+        List<String> stringList = null;
+
+        System.out.println(stringList.isEmpty());
+
+        stringList = new LinkedList<>();
+        System.out.println(stringList.isEmpty());
     }
 
 }
