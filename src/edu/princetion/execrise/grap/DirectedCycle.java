@@ -41,7 +41,7 @@ public class DirectedCycle {
         marked[v] = true;
         onStack[v] = true;
         for(int w : g.adj(v)){
-
+            // 有环了，不继续检测了，跳出。
             if(hasCycle()) return;
 
             // 没有访问过，肯定也不是环，记录轨迹，继续递归
