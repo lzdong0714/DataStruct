@@ -17,6 +17,16 @@ public class DirectDFS {
     private ArrayList<Integer> pre;
     private ArrayList<Integer> pos;
 
+
+
+    public DirectDFS(Graph g){
+        marked = new boolean[g.V()];
+        for(int v = 0; v < g.V(); v++){
+            if( !marked[v] )
+                dfs(g, v);
+        }
+    }
+
     private void dfs(Graph g, int v){
         marked[v] = true;
         count ++;
@@ -31,8 +41,11 @@ public class DirectDFS {
         pos.add(v);
     }
 
-
-    // TODO 深度优先遍历， 广度优先遍历就可以
+    /**
+     * graph 中找到s所有可以到达的顶点
+     * @param graph
+     * @param s
+     */
     public DirectDFS(Graph graph, int s){
         graph.validate(s);
         marked = new boolean[graph.V()];
@@ -41,6 +54,26 @@ public class DirectDFS {
         dfs(graph, s);
     }
 
+    /**
+     * graph 中找到所有source出发可以到达的顶点
+    * @param graph
+     * @param source
+     */
+    public DirectDFS(Graph graph,  Iterable<Integer> source){
+        marked = new boolean[graph.V()];
+        for(int v : source){
+            if( !marked[v] ){
+                dfs(graph, v);
+            }
+        }
+
+    }
+
+    public boolean marked(int v){
+        return marked[v];
+    }
+
+
     public List<Integer> getPrePath(){
 
         return pre;
@@ -48,15 +81,6 @@ public class DirectDFS {
 
     public List<Integer> getPostPath(){
         return pos;
-    }
-
-
-    public DirectDFS(Graph graph,  Iterable<Integer> source){
-
-    }
-
-    public boolean marked(int v){
-        return marked[v];
     }
 
 
