@@ -1,5 +1,6 @@
 package demo.base;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 /**
@@ -19,8 +20,18 @@ public class ArrayCollection {
         System.out.println(str.length);
     }
 
+    public void test_1(){
+        long count = Arrays.asList("abc", "adc", "www", "NN", "20180N-201").stream()
+                .filter(item -> {
+                    return item.contains("N");
+                }).count();
+        System.out.println("get count " + count);
+
+    }
+
     public static void main(String[] args) {
         ArrayCollection collection = new ArrayCollection();
-        collection.test();
+//        collection.test();
+        collection.test_1();
     }
 }
