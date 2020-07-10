@@ -28,10 +28,20 @@ public class ArrayCollection {
         System.out.println("get count " + count);
 
     }
+    private void test_2(){
+
+        LinkedList<String> strings = new LinkedList<>();
+        strings.add("ll");
+        System.out.println("=========" + strings.size());
+        strings.add(null);
+        System.out.println("=========" + strings.size());
+
+    }
 
     public static void main(String[] args) {
         ArrayCollection collection = new ArrayCollection();
 //        collection.test();
-        collection.test_1();
+//        collection.test_1();
+        collection.test_2();
     }
 }
