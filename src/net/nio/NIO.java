@@ -10,5 +10,9 @@ public class NIO {
      *      2 position: in written model, represent
      *      3 limit： in written model
      *
+     * Channel
+     *     SocketChannel read() = 0 // 无响应, -1 // 通道关闭
+     *     ServerSocketChannel write() = 1;
+     *
      */
 }

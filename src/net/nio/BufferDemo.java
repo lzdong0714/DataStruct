@@ -36,8 +36,6 @@ public class BufferDemo {
         // 可以避免多的拷贝操作， 以及避免GC时，heap 额外保存
         // 以及存在一个 Cleaner 对象，在GC时会自动回收，同GC时的触发Deallocator回收
         ByteBuffer direcByteBuff = ByteBuffer.allocate(size);
-
-
     }
 
 
