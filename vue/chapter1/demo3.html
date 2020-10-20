@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bin="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo1</title>
+</head>
+<body>
+
+<div id="app">
+    <!-- v-if v-else 的判断逻辑 -->
+    <h1 v-if="ok">Yes</h1>
+    <h1 v-else>No</h1>
+
+    <h2 v-if=" type==='A' ">A</h2>
+    <h2 v-else-if=" type==='B' ">B</h2>
+    <h2 v-else>C</h2>
+
+    <!--  循环 -->
+    <li v-for="item in items">
+        {{item.message}}
+    </li>
+
+    <li v-for="item in items">
+        {{item.message}}
+    </li>
+</div>
+<!-- 1 导入Vue.js-->
+   <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.min.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                ok :true,
+                type: "A",
+                items: [
+                    {message: "line 1 "},
+                    {message: "line 1 "},
+                    {message: "line 1 "}
+                ]
+            }
+        })
+    //   可以在浏览器的js中，用 console中 vm.message = "fuck world" 就可以修改{{message}}中的数据，为"fuck world"
+    //   所以这里表示就是双向绑定问题
+    </script>
+
+</body>
+</html>
