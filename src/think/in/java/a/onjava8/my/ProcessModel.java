@@ -31,7 +31,7 @@ public class ProcessModel {
     }
 
     private Integer calOverLaodMutil(BaseDataModel data){
-        return data.getX()^2 + data.getY()^2;
+        return data.getX() * data.getX() + data.getY() * data.getY();
 
     }
 }
